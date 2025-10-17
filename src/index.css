@@ -8,36 +8,37 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 216 20% 97%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 190 95% 50%;
-    --primary-foreground: 222.2 84% 4.9%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 201 96% 32%;
 
-    --secondary: 270 70% 65%;
-    --secondary-foreground: 222.2 84% 4.9%;
+    --secondary: 262 83% 58%;
+    --secondary-foreground: 0 0% 100%;
 
-    --tertiary: 160 75% 50%;
-    --tertiary-foreground: 222.2 84% 4.9%;
+    --tertiary: 158 64% 52%;
+    --tertiary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 84% 4.9%;
+    --accent: 158 64% 52%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 190 95% 50%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 199 89% 48%;
 
     --radius: 0.75rem;
     
@@ -78,6 +79,7 @@ All colors MUST be HSL.
 
     --primary: 190 95% 50%;
     --primary-foreground: 220 15% 8%;
+    --primary-hover: 190 95% 45%;
 
     --secondary: 270 70% 65%;
     --secondary-foreground: 220 15% 8%;
@@ -98,6 +100,10 @@ All colors MUST be HSL.
     --input: 220 15% 15%;
     --ring: 190 95% 50%;
   }
+
+  * {
+    transition: color 160ms, background-color 160ms, border-color 160ms, box-shadow 160ms;
+  }
 }
 
 @layer base {
@@ -108,6 +114,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', sans-serif;
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -117,12 +124,42 @@ All colors MUST be HSL.
   .font-mono {
     font-family: 'Roboto Mono', monospace;
   }
+
+  p {
+    max-width: 72ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }
 
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(199 89% 48%), hsl(262 83% 58%));
+  }
+
+  .dark .text-gradient {
     background-image: var(--gradient-primary);
+  }
+
+  .underline-on-hover {
+    position: relative;
+  }
+
+  .underline-on-hover:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: currentColor;
   }
 
   .glow-primary {
@@ -138,7 +175,16 @@ All colors MUST be HSL.
   }
 
   .glass-panel {
-    @apply backdrop-blur-xl bg-card/40 border border-border/50;
+    @apply border border-border/50;
+  }
+
+  .dark .glass-panel {
+    @apply backdrop-blur-xl bg-card/40;
+  }
+
+  :root .glass-panel {
+    @apply bg-card shadow-[0_10px_24px_rgba(15,23,42,0.08)];
+    border: 1px solid hsl(var(--border));
   }
 
   .gradient-border {
@@ -155,5 +201,13 @@ All colors MUST be HSL.
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+  }
+
+  section {
+    content-visibility: auto;
+  }
+
+  .collapsible-header {
+    will-change: transform;
   }
 }

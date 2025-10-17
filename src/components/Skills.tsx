@@ -89,7 +89,7 @@ export const Skills = () => {
                       <Badge
                         key={skillIndex}
                         variant="secondary"
-                        className="bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(0,217,255,0.4)] transition-all cursor-default font-medium"
+                        className="bg-card dark:bg-primary/20 text-primary border border-border dark:border-primary/30 hover:border-primary/50 hover:shadow-[0_0_0_6px_rgba(14,165,233,0.12)] transition-all cursor-default font-medium min-h-[44px] px-4 underline-on-hover"
                       >
                         {skill}
                       </Badge>

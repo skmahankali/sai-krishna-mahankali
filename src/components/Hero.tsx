@@ -32,9 +32,14 @@ export const Hero = () => {
         <ThemeToggle />
       </div>
 
-      {/* Gradient orbs */}
-      <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse-glow animation-delay-1000" />
+      {/* Subtle radial gradient - light mode only */}
+      <div className="absolute inset-0 dark:hidden">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/[0.03] via-secondary/[0.02] to-transparent blur-3xl" />
+      </div>
+
+      {/* Gradient orbs - dark mode only */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow hidden dark:block" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse-glow animation-delay-1000 hidden dark:block" />
       
       <div className="relative z-10 text-center max-w-5xl mx-auto space-y-8 animate-slide-up">
         {/* Terminal indicator */}
@@ -46,7 +51,7 @@ export const Hero = () => {
         <h1 className="text-6xl md:text-8xl font-bold font-display tracking-tight">
           <span className="text-gradient">Sai Krishna</span>
           <br />
-          <span className="text-foreground">Mahankali</span>
+          <span className="dark:text-foreground text-foreground">Mahankali</span>
         </h1>
 
         {/* Social Links */}
@@ -57,7 +62,7 @@ export const Hero = () => {
             rel="noopener noreferrer"
             className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110"
           >
-            <Github className="w-6 h-6 text-primary group-hover:text-primary transition-colors" />
+            <Github className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
           </a>
           <a
             href="https://www.linkedin.com/in/skmaha/"
@@ -65,7 +70,7 @@ export const Hero = () => {
             rel="noopener noreferrer"
             className="group p-3 glass-panel border border-secondary/30 rounded-full hover:border-secondary/60 hover:bg-secondary/10 transition-all duration-300 hover:scale-110"
           >
-            <Linkedin className="w-6 h-6 text-secondary group-hover:text-secondary transition-colors" />
+            <Linkedin className="w-6 h-6 text-foreground dark:text-secondary opacity-90 hover:text-secondary transition-colors" fill="currentColor" />
           </a>
         </div>
 
@@ -80,7 +85,7 @@ export const Hero = () => {
           <Button
             size="lg"
             onClick={scrollToAbout}
-            className="group relative overflow-hidden bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-6 text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,217,255,0.5)]"
+            className="group relative overflow-hidden bg-primary hover:bg-primary-hover text-primary-foreground font-semibold px-8 py-6 text-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(14,165,233,0.5)] min-h-[44px]"
           >
             <span className="relative z-10">Explore My Work</span>
             <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -90,7 +95,7 @@ export const Hero = () => {
             size="lg"
             variant="outline"
             onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-            className="border-primary/50 text-foreground hover:bg-primary/10 hover:border-primary px-8 py-6 text-lg backdrop-blur-sm"
+            className="border-primary/50 text-foreground hover:bg-primary/10 hover:border-primary px-8 py-6 text-lg backdrop-blur-sm bg-card min-h-[44px]"
           >
             Get In Touch
           </Button>

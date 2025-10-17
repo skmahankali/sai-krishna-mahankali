@@ -65,8 +65,9 @@ export const Projects = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="shrink-0 hover:bg-primary/10 hover:text-primary"
+                    className="shrink-0 hover:bg-primary/10 hover:text-primary min-h-[44px] min-w-[44px]"
                     onClick={() => window.open(project.github, "_blank")}
+                    aria-label="View on GitHub"
                   >
                     <Github className="w-5 h-5" />
                   </Button>
@@ -89,7 +90,7 @@ export const Projects = () => {
 
                 <Button
                   variant="outline"
-                  className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary group/btn"
+                  className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary group/btn min-h-[44px]"
                   onClick={() => window.open(project.github, "_blank")}
                 >
                   <span>View on GitHub</span>

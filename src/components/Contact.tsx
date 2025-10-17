@@ -57,9 +57,8 @@ export const Contact = () => {
             return (
               <Card
                 key={index}
-                className="glass-panel p-6 group hover:border-primary/50 transition-all duration-300 animate-slide-up cursor-pointer"
+                className="glass-panel p-6 group hover:border-primary/50 transition-all duration-300 animate-slide-up relative overflow-hidden min-h-[44px]"
                 style={{ animationDelay: `${index * 100}ms` }}
-                onClick={() => window.open(contact.href, "_blank")}
               >
                 <div className="flex items-center gap-4">
                   <div className={`p-4 rounded-xl bg-${contact.color}/10 group-hover:bg-${contact.color}/20 transition-colors group-hover:scale-110 duration-300`}>
@@ -73,7 +72,15 @@ export const Contact = () => {
                     </p>
                   </div>
 
-                  <Send className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  <a
+                    href={contact.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    aria-label={`Visit ${contact.label}`}
+                  >
+                    <Send className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+                  </a>
                 </div>
               </Card>
             );

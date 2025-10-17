@@ -6,11 +6,13 @@ import { Projects } from "@/components/Projects";
 import { Certifications } from "@/components/Certifications";
 import { Contact } from "@/components/Contact";
 import { ParticleBackground } from "@/components/ParticleBackground";
+import { ScrollHeader } from "@/components/ScrollHeader";
 
 const Index = () => {
   return (
     <div className="relative min-h-screen overflow-hidden">
       <ParticleBackground />
+      <ScrollHeader />
       
       <div className="relative z-10">
         <Hero />

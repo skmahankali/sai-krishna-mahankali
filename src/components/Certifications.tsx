@@ -62,7 +62,7 @@ export const Certifications = () => {
 
                 <Button
                   variant="outline"
-                  className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary group/btn"
+                  className="w-full border-primary/30 hover:bg-primary/10 hover:border-primary group/btn min-h-[44px]"
                   onClick={() => window.open(cert.url, "_blank")}
                 >
                   <span>View Credential</span>

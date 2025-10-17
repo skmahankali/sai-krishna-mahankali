@@ -1,7 +1,20 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const ParticleBackground = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    
+    checkTheme();
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -36,7 +49,11 @@ export const ParticleBackground = () => {
     }
 
     const animate = () => {
-      ctx.fillStyle = "rgba(26, 31, 44, 0.05)";
+      const baseOpacity = isDark ? 0.05 : 0.005;
+      const particleOpacity = isDark ? 1 : 0.08;
+      const lineOpacity = isDark ? 0.1 : 0.008;
+      
+      ctx.fillStyle = `rgba(26, 31, 44, ${baseOpacity})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((particle, i) => {
@@ -48,7 +65,7 @@ export const ParticleBackground = () => {
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 217, 255, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(0, 217, 255, ${particle.opacity * particleOpacity})`;
         ctx.fill();
 
         // Draw connections
@@ -61,7 +78,7 @@ export const ParticleBackground = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particle2.x, particle2.y);
-            ctx.strokeStyle = `rgba(0, 217, 255, ${0.1 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(0, 217, 255, ${lineOpacity * (1 - distance / 150)})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -80,12 +97,13 @@ export const ParticleBackground = () => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [isDark]);
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none opacity-30"
+      className="fixed inset-0 pointer-events-none z-0"
+      style={{ opacity: isDark ? 0.3 : 0.08 }}
     />
   );
 };
