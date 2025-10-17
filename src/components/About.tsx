@@ -22,7 +22,7 @@ export const About = () => {
                 <User className="w-6 h-6 text-primary" />
               </div>
               <div className="space-y-4">
-                <h3 className="text-2xl font-semibold font-display">Who I Am</h3>
+                <h3 className="text-2xl font-semibold font-display">About Me!</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   I'm a DevOps Engineer with over six years of experience in IT, currently specializing in automation. 
                   I'm focused on expanding my expertise to become a Site Reliability Engineer (SRE). I'm passionate about 

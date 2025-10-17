@@ -13,7 +13,7 @@ const skillCategories = [
     title: "Automation & IaC",
     icon: Workflow,
     color: "secondary",
-    skills: ["Terraform", "Ansible", "AWX/Tower/EDA", "HashiCorp Vault"],
+    skills: ["Terraform", "Ansible", "AWX/Ansible Tower/EDA", "HashiCorp Vault"],
   },
   {
     title: "Cloud & Containers",
@@ -67,10 +67,16 @@ export const Skills = () => {
             return (
               <Card
                 key={index}
-                className="glass-panel p-6 group hover:border-primary/50 transition-all duration-300 animate-slide-up"
+                className="glass-panel p-6 group hover:border-primary/50 transition-all duration-300 animate-slide-up relative overflow-hidden"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="space-y-4">
+                {/* Corner glow effects */}
+                <div className="absolute top-0 left-0 w-12 h-12 bg-primary/0 group-hover:bg-primary/30 transition-all duration-300 blur-xl" />
+                <div className="absolute top-0 right-0 w-12 h-12 bg-primary/0 group-hover:bg-primary/30 transition-all duration-300 blur-xl" />
+                <div className="absolute bottom-0 left-0 w-12 h-12 bg-primary/0 group-hover:bg-primary/30 transition-all duration-300 blur-xl" />
+                <div className="absolute bottom-0 right-0 w-12 h-12 bg-primary/0 group-hover:bg-primary/30 transition-all duration-300 blur-xl" />
+                
+                <div className="space-y-4 relative z-10">
                   <div className="flex items-center gap-3">
                     <div className={`p-3 rounded-lg bg-${category.color}/10 group-hover:bg-${category.color}/20 transition-colors`}>
                       <Icon className={`w-6 h-6 text-${category.color}`} />
@@ -83,7 +89,7 @@ export const Skills = () => {
                       <Badge
                         key={skillIndex}
                         variant="secondary"
-                        className="bg-muted/50 hover:bg-primary/20 hover:text-primary transition-colors cursor-default"
+                        className="bg-primary/20 text-primary border border-primary/30 hover:bg-primary/30 hover:border-primary/50 hover:shadow-[0_0_15px_rgba(0,217,255,0.4)] transition-all cursor-default font-medium"
                       >
                         {skill}
                       </Badge>

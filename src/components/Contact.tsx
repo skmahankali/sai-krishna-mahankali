@@ -26,9 +26,9 @@ const contacts = [
   },
   {
     icon: Instagram,
-    label: "Instagram (Gaming)",
+    label: "Gaming",
     value: "@_d3ad_shot_",
-    href: "https://www.instagram.com/_d3ad_shot_?igsh=MXZhNmdmdmVnYnN3ZA%3D%3D&utm_source=qr",
+    href: "https://www.instagram.com/_d3ad_shot_/?igsh=MXZhNmdmdmVnYnN3ZA%3D%3D&utm_source=qr",
     color: "primary",
   },
 ];

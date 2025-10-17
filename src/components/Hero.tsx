@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Terminal } from "lucide-react";
+import { ChevronDown, Terminal, Github, Linkedin } from "lucide-react";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 export const Hero = () => {
   const [text, setText] = useState("");
@@ -26,6 +27,11 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
+      {/* Theme Toggle - Fixed Position */}
+      <div className="fixed top-6 right-6 z-50">
+        <ThemeToggle />
+      </div>
+
       {/* Gradient orbs */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
       <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse-glow animation-delay-1000" />
@@ -42,6 +48,26 @@ export const Hero = () => {
           <br />
           <span className="text-foreground">Mahankali</span>
         </h1>
+
+        {/* Social Links */}
+        <div className="flex items-center justify-center gap-4">
+          <a
+            href="https://github.com/skmahankali"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110"
+          >
+            <Github className="w-6 h-6 text-primary group-hover:text-primary transition-colors" />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/skmaha/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group p-3 glass-panel border border-secondary/30 rounded-full hover:border-secondary/60 hover:bg-secondary/10 transition-all duration-300 hover:scale-110"
+          >
+            <Linkedin className="w-6 h-6 text-secondary group-hover:text-secondary transition-colors" />
+          </a>
+        </div>
 
         <div className="h-16 flex items-center justify-center">
           <p className="text-xl md:text-2xl text-muted-foreground font-mono">
