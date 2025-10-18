@@ -50,8 +50,8 @@ export const ParticleBackground = () => {
 
     const animate = () => {
       const baseOpacity = isDark ? 0.05 : 0.005;
-      const particleOpacity = isDark ? 1 : 0.08;
-      const lineOpacity = isDark ? 0.1 : 0.008;
+      const particleOpacity = isDark ? 1 : 0.12;
+      const lineOpacity = isDark ? 0.1 : 0.012;
       
       ctx.fillStyle = `rgba(26, 31, 44, ${baseOpacity})`;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -103,7 +103,7 @@ export const ParticleBackground = () => {
     <canvas
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-0"
-      style={{ opacity: isDark ? 0.3 : 0.08 }}
+      style={{ opacity: isDark ? 0.3 : 0.12 }}
     />
   );
 };

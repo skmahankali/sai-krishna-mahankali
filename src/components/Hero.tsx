@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Terminal, Github, Linkedin, Mail, Instagram } from "lucide-react";
+import { ChevronDown, Terminal, Github, Linkedin, Mail, Gamepad2 } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -55,38 +56,71 @@ export const Hero = () => {
         </h1>
 
         {/* Social Links */}
-        <div className="flex items-center justify-center gap-4">
-          <a
-            href="https://github.com/skmahankali"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110"
-          >
-            <Github className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/skmaha/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group p-3 glass-panel border border-secondary/30 rounded-full hover:border-secondary/60 hover:bg-secondary/10 transition-all duration-300 hover:scale-110"
-          >
-            <Linkedin className="w-6 h-6 text-foreground dark:text-secondary opacity-90 hover:text-secondary transition-colors" fill="currentColor" />
-          </a>
-          <a
-            href="mailto:saikrishna.mahankali98@gmail.com"
-            className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110"
-          >
-            <Mail className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
-          </a>
-          <a
-            href="https://www.instagram.com/_d3ad_shot_/?igsh=MXZhNmdmdmVnYnN3ZA%3D%3D&utm_source=qr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group p-3 glass-panel border border-tertiary/30 rounded-full hover:border-tertiary/60 hover:bg-tertiary/10 transition-all duration-300 hover:scale-110"
-          >
-            <Instagram className="w-6 h-6 text-foreground dark:text-tertiary opacity-90 hover:text-tertiary transition-colors" fill="currentColor" />
-          </a>
-        </div>
+        <TooltipProvider>
+          <div className="flex items-center justify-center gap-4">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href="https://github.com/skmahankali"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                >
+                  <Github className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>GitHub</p>
+              </TooltipContent>
+            </Tooltip>
+            
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href="https://www.linkedin.com/in/skmaha/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-3 glass-panel border border-secondary/30 rounded-full hover:border-secondary/60 hover:bg-secondary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                >
+                  <Linkedin className="w-6 h-6 text-foreground dark:text-secondary opacity-90 hover:text-secondary transition-colors" fill="currentColor" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>LinkedIn</p>
+              </TooltipContent>
+            </Tooltip>
+            
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href="mailto:saikrishna.mahankali98@gmail.com"
+                  className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                >
+                  <Mail className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Email</p>
+              </TooltipContent>
+            </Tooltip>
+            
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <a
+                  href="https://www.instagram.com/_d3ad_shot_/?igsh=MXZhNmdmdmVnYnN3ZA%3D%3D&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group p-3 glass-panel border border-tertiary/30 rounded-full hover:border-tertiary/60 hover:bg-tertiary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                >
+                  <Gamepad2 className="w-6 h-6 text-foreground dark:text-tertiary opacity-90 hover:text-tertiary transition-colors" fill="currentColor" />
+                </a>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Gaming</p>
+              </TooltipContent>
+            </Tooltip>
+          </div>
+        </TooltipProvider>
 
         <div className="h-16 flex items-center justify-center">
           <p className="text-xl md:text-2xl text-muted-foreground font-mono">
@@ -115,8 +149,10 @@ export const Hero = () => {
           </Button>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer mt-2" onClick={scrollToAbout}>
-          <ChevronDown className="w-8 h-8 text-primary" />
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none min-h-[3rem] flex items-end">
+          <div className="animate-bounce cursor-pointer pointer-events-auto" onClick={scrollToAbout}>
+            <ChevronDown className="w-8 h-8 text-primary" />
+          </div>
         </div>
       </div>
     </section>
