@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Terminal, Github, Linkedin } from "lucide-react";
+import { ChevronDown, Terminal, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
 
@@ -72,6 +72,20 @@ export const Hero = () => {
           >
             <Linkedin className="w-6 h-6 text-foreground dark:text-secondary opacity-90 hover:text-secondary transition-colors" fill="currentColor" />
           </a>
+          <a
+            href="mailto:saikrishna.mahankali98@gmail.com"
+            className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110"
+          >
+            <Mail className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
+          </a>
+          <a
+            href="https://www.instagram.com/_d3ad_shot_/?igsh=MXZhNmdmdmVnYnN3ZA%3D%3D&utm_source=qr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group p-3 glass-panel border border-tertiary/30 rounded-full hover:border-tertiary/60 hover:bg-tertiary/10 transition-all duration-300 hover:scale-110"
+          >
+            <Instagram className="w-6 h-6 text-foreground dark:text-tertiary opacity-90 hover:text-tertiary transition-colors" fill="currentColor" />
+          </a>
         </div>
 
         <div className="h-16 flex items-center justify-center">
@@ -101,7 +115,7 @@ export const Hero = () => {
           </Button>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer" onClick={scrollToAbout}>
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce cursor-pointer mt-2" onClick={scrollToAbout}>
           <ChevronDown className="w-8 h-8 text-primary" />
         </div>
       </div>

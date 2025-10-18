@@ -48,55 +48,40 @@ const experiences = [
 
 export const Experience = () => {
   return (
-    <section id="experience" className="py-20 px-4 md:px-8 lg:px-16 bg-muted/20">
-      <div className="max-w-6xl mx-auto space-y-12">
-        <div className="space-y-4 animate-slide-up">
-          <div className="inline-flex items-center gap-2 text-primary font-mono text-sm">
-            <span className="w-12 h-px bg-primary" />
-            <span>Experience</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display">
-            <span className="text-gradient">Professional Journey</span>
-          </h2>
-        </div>
-
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-tertiary opacity-30 hidden md:block" />
-
-          <div className="space-y-8">
-            {experiences.map((exp, index) => (
-              <div key={index} className="relative">
-                {/* Timeline dot */}
-                <div className="absolute left-6 top-8 hidden md:block z-10">
-                  <div className={`w-5 h-5 rounded-full bg-${exp.color} ring-4 ring-background group-hover:scale-125 transition-transform duration-300`} />
+    <div className="relative">
+      {/* Timeline line */}
+      <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-tertiary hidden md:block" />
+      
+      <div className="space-y-8">
+        {experiences.map((exp, index) => (
+          <Card
+            key={index}
+            className="glass-panel p-6 md:p-8 group hover:border-primary/50 transition-all duration-300 animate-slide-up relative md:ml-20"
+            style={{ animationDelay: `${index * 100}ms` }}
+          >
+            {/* Timeline dot */}
+            <div className={`absolute -left-[3.75rem] top-8 w-6 h-6 rounded-full bg-${exp.color} border-4 border-background hidden md:block group-hover:scale-125 transition-transform`} />
+            
+            <div className="space-y-4">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
+                <div>
+                  <h3 className="text-2xl font-semibold font-display group-hover:text-primary transition-colors">
+                    {exp.title}
+                  </h3>
+                  <p className="text-lg text-muted-foreground">{exp.company}</p>
                 </div>
-                
-                <Card
-                  className="glass-panel p-6 md:p-8 ml-0 md:ml-16 group hover:border-primary/50 transition-all duration-300 animate-slide-up"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-
-                <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-                  <div className="space-y-1">
-                    <h3 className="text-xl md:text-2xl font-semibold font-display flex items-center gap-2">
-                      <Briefcase className={`w-5 h-5 text-${exp.color}`} />
-                      {exp.title}
-                    </h3>
-                    <p className="text-lg text-muted-foreground">{exp.company}</p>
-                  </div>
-                  <span className="text-sm font-mono text-primary px-3 py-1 bg-primary/10 rounded-full w-fit">
-                    {exp.period}
-                  </span>
-                </div>
-                
-                  <p className="text-muted-foreground leading-relaxed">{exp.description}</p>
-                </Card>
+                <span className={`text-sm font-mono px-3 py-1 rounded-full bg-${exp.color}/10 text-${exp.color} self-start`}>
+                  {exp.period}
+                </span>
               </div>
-            ))}
-          </div>
-        </div>
+              
+              <p className="text-muted-foreground leading-relaxed">
+                {exp.description}
+              </p>
+            </div>
+          </Card>
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
