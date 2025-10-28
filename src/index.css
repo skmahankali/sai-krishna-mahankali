@@ -190,4 +190,11 @@ All colors MUST be HSL.
   .collapsible-header {
     will-change: transform;
   }
+
+  /* Disable hover scaling on touch devices */
+  @media (hover: none) {
+    img:hover {
+      transform: none !important;
+    }
+  }
 }

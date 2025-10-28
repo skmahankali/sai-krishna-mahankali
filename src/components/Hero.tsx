@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Terminal, Github, Linkedin, Gamepad2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEffect, useState } from "react";
+import profilePhoto from "@/assets/profile-photo.png";
 
 export const Hero = () => {
   const [text, setText] = useState("");
@@ -36,6 +37,19 @@ export const Hero = () => {
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border border-primary/30 mb-8">
           <Terminal className="w-4 h-4 text-primary animate-pulse" />
           <span className="font-mono text-sm text-muted-foreground">System initialized...</span>
+        </div>
+
+        {/* Profile Photo */}
+        <div className="flex justify-center mb-6">
+          <div className="relative group">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-secondary opacity-40 blur-xl group-hover:opacity-60 transition-opacity duration-300" />
+            <img
+              src={profilePhoto}
+              alt="Sai Krishna Mahankali"
+              className="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-primary/40 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-transform duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 md:hover:scale-115"
+              style={{ transitionDuration: '250ms' }}
+            />
+          </div>
         </div>
 
         <h1 className="text-6xl md:text-8xl font-bold font-display tracking-tight">
