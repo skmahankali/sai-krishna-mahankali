@@ -8,66 +8,6 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 215 25% 15%;
-    --foreground: 213 100% 93%;
-
-    --card: 215 25% 18%;
-    --card-foreground: 213 100% 93%;
-
-    --popover: 0 0% 98%;
-    --popover-foreground: 222 47% 11%;
-
-    --primary: 199 89% 48%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 201 96% 32%;
-
-    --secondary: 262 83% 58%;
-    --secondary-foreground: 0 0% 100%;
-
-    --tertiary: 158 64% 52%;
-    --tertiary-foreground: 0 0% 100%;
-
-    --muted: 220 14% 96%;
-    --muted-foreground: 215 16% 47%;
-
-    --accent: 158 64% 52%;
-    --accent-foreground: 0 0% 100%;
-
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 214 20% 25%;
-    --input: 214 20% 22%;
-    --ring: 199 89% 48%;
-
-    --radius: 0.75rem;
-    
-    --glow-primary: 0 0 20px hsl(190 95% 50% / 0.5);
-    --glow-secondary: 0 0 20px hsl(270 70% 65% / 0.5);
-    --glow-tertiary: 0 0 20px hsl(160 75% 50% / 0.5);
-    
-    --gradient-primary: linear-gradient(135deg, hsl(190 95% 50%), hsl(270 70% 65%));
-    --gradient-glow: linear-gradient(135deg, hsl(190 95% 50% / 0.2), hsl(270 70% 65% / 0.2));
-    --gradient-card: linear-gradient(135deg, hsl(220 15% 12% / 0.8), hsl(220 15% 10% / 0.8));
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
     --background: 220 15% 8%;
     --foreground: 210 40% 98%;
 
@@ -99,6 +39,25 @@ All colors MUST be HSL.
     --border: 220 15% 20%;
     --input: 220 15% 15%;
     --ring: 190 95% 50%;
+
+    --radius: 0.75rem;
+    
+    --glow-primary: 0 0 20px hsl(190 95% 50% / 0.5);
+    --glow-secondary: 0 0 20px hsl(270 70% 65% / 0.5);
+    --glow-tertiary: 0 0 20px hsl(160 75% 50% / 0.5);
+    
+    --gradient-primary: linear-gradient(135deg, hsl(190 95% 50%), hsl(270 70% 65%));
+    --gradient-glow: linear-gradient(135deg, hsl(190 95% 50% / 0.2), hsl(270 70% 65% / 0.2));
+    --gradient-card: linear-gradient(135deg, hsl(220 15% 12% / 0.8), hsl(220 15% 10% / 0.8));
+
+    --sidebar-background: 220 15% 10%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 190 95% 50%;
+    --sidebar-primary-foreground: 220 15% 8%;
+    --sidebar-accent: 220 15% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 220 15% 20%;
+    --sidebar-ring: 190 95% 50%;
   }
 
   * {
@@ -148,10 +107,6 @@ All colors MUST be HSL.
 @layer utilities {
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(199 89% 48%), hsl(262 83% 58%));
-  }
-
-  .dark .text-gradient {
     background-image: var(--gradient-primary);
   }
 

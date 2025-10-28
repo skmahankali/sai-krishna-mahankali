@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Terminal, Github, Linkedin, Gamepad2 } from "lucide-react";
+import { Terminal, Github, Linkedin, Gamepad2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEffect, useState } from "react";
-import { ThemeToggle } from "./ThemeToggle";
 
 export const Hero = () => {
   const [text, setText] = useState("");
@@ -28,19 +27,9 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-      {/* Theme Toggle - Fixed Position */}
-      <div className="fixed top-6 right-6 z-50">
-        <ThemeToggle />
-      </div>
-
-      {/* Subtle radial gradient - light mode only */}
-      <div className="absolute inset-0 dark:hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-radial from-primary/[0.03] via-secondary/[0.02] to-transparent blur-3xl" />
-      </div>
-
-      {/* Gradient orbs - dark mode only */}
-      <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow hidden dark:block" />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse-glow animation-delay-1000 hidden dark:block" />
+      {/* Gradient orbs */}
+      <div className="absolute top-20 left-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px] animate-pulse-glow" />
+      <div className="absolute bottom-20 right-20 w-96 h-96 bg-secondary/20 rounded-full blur-[120px] animate-pulse-glow animation-delay-1000" />
       
       <div className="relative z-10 text-center max-w-5xl mx-auto space-y-8 animate-slide-up">
         {/* Terminal indicator */}
@@ -157,12 +146,6 @@ export const Hero = () => {
           >
             Get In Touch
           </Button>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 pointer-events-none min-h-[3rem] flex items-end">
-          <div className="animate-bounce cursor-pointer pointer-events-auto" onClick={scrollToAbout}>
-            <ChevronDown className="w-8 h-8 text-primary" />
-          </div>
         </div>
       </div>
     </section>

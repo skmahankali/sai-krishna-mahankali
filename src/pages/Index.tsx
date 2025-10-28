@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Hero } from "@/components/Hero";
+import { Photo } from "@/components/Photo";
 import { About } from "@/components/About";
 import { Experience } from "@/components/Experience";
 import { Skills } from "@/components/Skills";
@@ -15,6 +16,7 @@ const Index = () => {
   const lastScrollY = useRef(0);
 
   const sections = [
+    { id: "photo", title: "Photo" },
     { id: "about", title: "About Me" },
     { id: "experience", title: "Professional Journey" },
     { id: "skills", title: "Technical Expertise" },
@@ -76,6 +78,24 @@ const Index = () => {
         <Hero />
         
         <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 py-12 space-y-8">
+          {/* Photo */}
+          <section 
+            ref={(el) => (sectionRefs.current["photo"] = el)} 
+            id="photo"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6 text-center">
+                Photo
+              </h2>
+              <Photo />
+            </div>
+          </section>
+
           {/* About Me */}
           <section 
             ref={(el) => (sectionRefs.current["about"] = el)} 
