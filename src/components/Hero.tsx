@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Terminal, Github, Linkedin, Mail, Gamepad2 } from "lucide-react";
+import { ChevronDown, Terminal, Github, Linkedin, Gamepad2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEffect, useState } from "react";
 import { ThemeToggle } from "./ThemeToggle";
@@ -94,13 +94,23 @@ export const Hero = () => {
               <TooltipTrigger asChild>
                 <a
                   href="mailto:saikrishna.mahankali98@gmail.com"
-                  className="group p-3 glass-panel border border-primary/30 rounded-full hover:border-primary/60 hover:bg-primary/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(14,165,233,0.4)] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                  className="group p-3 glass-panel border border-destructive/30 rounded-full hover:border-destructive/60 hover:bg-destructive/10 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(220,38,38,0.4)] min-w-[44px] min-h-[44px] flex items-center justify-center"
                 >
-                  <Mail className="w-6 h-6 text-foreground dark:text-primary opacity-90 hover:text-primary transition-colors" fill="currentColor" />
+                  <svg 
+                    className="w-6 h-6" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path 
+                      d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19.6 8.25L12.53 12.67C12.21 12.87 11.79 12.87 11.47 12.67L4.4 8.25C4.15 8.09 4 7.82 4 7.53C4 6.86 4.73 6.46 5.3 6.81L12 11L18.7 6.81C19.27 6.46 20 6.86 20 7.53C20 7.82 19.85 8.09 19.6 8.25Z" 
+                      fill="#EA4335"
+                    />
+                  </svg>
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Email</p>
+                <p>Gmail</p>
               </TooltipContent>
             </Tooltip>
             

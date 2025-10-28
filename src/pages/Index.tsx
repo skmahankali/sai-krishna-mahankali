@@ -8,14 +8,11 @@ import { Certifications } from "@/components/Certifications";
 import { ContactForm } from "@/components/ContactForm";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { ScrollHeader } from "@/components/ScrollHeader";
-import { SectionDock } from "@/components/SectionDock";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
 
 const Index = () => {
-  const [openSection, setOpenSection] = useState<string | null>(null);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
-  const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+  const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
+  const lastScrollY = useRef(0);
 
   const sections = [
     { id: "about", title: "About Me" },
@@ -26,182 +23,166 @@ const Index = () => {
     { id: "contact", title: "Let's Connect" },
   ];
 
-  const toggleSection = (section: string) => {
-    setOpenSection(openSection === section ? null : section);
-  };
-
-  const scrollToSection = (sectionId: string) => {
-    const element = sectionRefs.current[sectionId];
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      setOpenSection(sectionId);
-    }
-  };
-
   useEffect(() => {
-    // Start with all sections expanded (open)
-    const timer = setTimeout(() => {
-      sections.forEach(section => {
-        if (!openSection) {
-          setOpenSection(section.id);
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const direction = currentScrollY > lastScrollY.current ? 'down' : 'up';
+      
+      if (direction !== scrollDirection && currentScrollY > 100) {
+        setScrollDirection(direction);
+      }
+      
+      lastScrollY.current = currentScrollY;
+
+      // Apply compression/expansion effect to sections
+      Object.entries(sectionRefs.current).forEach(([id, ref]) => {
+        if (!ref) return;
+        
+        const rect = ref.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInView) {
+          const scrollProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight));
+          
+          if (direction === 'up') {
+            // Compress: reduce scale and padding
+            const scale = 0.96 + (scrollProgress * 0.04); // 0.96 to 1.0
+            ref.style.transform = `scaleY(${scale})`;
+            ref.style.paddingTop = `${scrollProgress * 24}px`;
+            ref.style.paddingBottom = `${scrollProgress * 24}px`;
+          } else {
+            // Expand: full scale and padding
+            ref.style.transform = 'scaleY(1)';
+            ref.style.paddingTop = '24px';
+            ref.style.paddingBottom = '24px';
+          }
         }
       });
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: "-20% 0px -70% 0px",
-      threshold: 0,
     };
 
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observer = new IntersectionObserver(observerCallback, observerOptions);
-
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
-    return () => observer.disconnect();
-  }, []);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [scrollDirection]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">
       <ParticleBackground />
       <ScrollHeader />
-      <SectionDock
-        sections={sections}
-        activeSection={activeSection}
-        onSectionClick={scrollToSection}
-      />
       
       <div className="relative z-10">
         <Hero />
         
-        <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 py-12 space-y-6">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 lg:px-16 py-12 space-y-8">
           {/* About Me */}
-          <div ref={(el) => (sectionRefs.current["about"] = el)} id="about">
-            <Collapsible open={openSection === "about"} onOpenChange={() => toggleSection("about")}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass-panel p-6 rounded-xl border-2 border-border hover:border-primary/50 transition-all group cursor-pointer will-change-transform">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient">
-                      About Me
-                    </h2>
-                    <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-240 ${openSection === "about" ? "rotate-180" : ""}`} style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }} />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-6">
-                <About />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          <section 
+            ref={(el) => (sectionRefs.current["about"] = el)} 
+            id="about"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">
+                About Me
+              </h2>
+              <About />
+            </div>
+          </section>
 
           {/* Experience */}
-          <div ref={(el) => (sectionRefs.current["experience"] = el)} id="experience">
-            <Collapsible open={openSection === "experience"} onOpenChange={() => toggleSection("experience")}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass-panel p-6 rounded-xl border-2 border-border hover:border-primary/50 transition-all group cursor-pointer will-change-transform">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient">
-                      Professional Journey
-                    </h2>
-                    <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-240 ${openSection === "experience" ? "rotate-180" : ""}`} style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }} />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-6">
-                <Experience />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          <section 
+            ref={(el) => (sectionRefs.current["experience"] = el)} 
+            id="experience"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">
+                Professional Journey
+              </h2>
+              <Experience />
+            </div>
+          </section>
 
           {/* Skills */}
-          <div ref={(el) => (sectionRefs.current["skills"] = el)} id="skills">
-            <Collapsible open={openSection === "skills"} onOpenChange={() => toggleSection("skills")}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass-panel p-6 rounded-xl border-2 border-border hover:border-primary/50 transition-all group cursor-pointer will-change-transform">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient">
-                      Technical Expertise
-                    </h2>
-                    <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-240 ${openSection === "skills" ? "rotate-180" : ""}`} style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }} />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-6">
-                <Skills />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          <section 
+            ref={(el) => (sectionRefs.current["skills"] = el)} 
+            id="skills"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">
+                Technical Expertise
+              </h2>
+              <Skills />
+            </div>
+          </section>
 
           {/* Projects */}
-          <div ref={(el) => (sectionRefs.current["projects"] = el)} id="projects">
-            <Collapsible open={openSection === "projects"} onOpenChange={() => toggleSection("projects")}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass-panel p-6 rounded-xl border-2 border-border hover:border-primary/50 transition-all group cursor-pointer will-change-transform">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient">
-                      Featured Work
-                    </h2>
-                    <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-240 ${openSection === "projects" ? "rotate-180" : ""}`} style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }} />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-6">
-                <Projects />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          <section 
+            ref={(el) => (sectionRefs.current["projects"] = el)} 
+            id="projects"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">
+                Featured Work
+              </h2>
+              <Projects />
+            </div>
+          </section>
 
           {/* Certifications */}
-          <div ref={(el) => (sectionRefs.current["certifications"] = el)} id="certifications">
-            <Collapsible open={openSection === "certifications"} onOpenChange={() => toggleSection("certifications")}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass-panel p-6 rounded-xl border-2 border-border hover:border-primary/50 transition-all group cursor-pointer will-change-transform">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient">
-                      Professional Credentials
-                    </h2>
-                    <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-240 ${openSection === "certifications" ? "rotate-180" : ""}`} style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }} />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-6">
-                <Certifications />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          <section 
+            ref={(el) => (sectionRefs.current["certifications"] = el)} 
+            id="certifications"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">
+                Professional Credentials
+              </h2>
+              <Certifications />
+            </div>
+          </section>
 
           {/* Contact */}
-          <div ref={(el) => (sectionRefs.current["contact"] = el)} id="contact">
-            <Collapsible open={openSection === "contact"} onOpenChange={() => toggleSection("contact")}>
-              <CollapsibleTrigger className="w-full">
-                <div className="glass-panel p-6 rounded-xl border-2 border-border hover:border-primary/50 transition-all group cursor-pointer will-change-transform">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient">
-                      Let's Connect
-                    </h2>
-                    <ChevronDown className={`w-6 h-6 text-primary transition-transform duration-240 ${openSection === "contact" ? "rotate-180" : ""}`} style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }} />
-                  </div>
-                </div>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="pt-6">
-                <ContactForm />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+          <section 
+            ref={(el) => (sectionRefs.current["contact"] = el)} 
+            id="contact"
+            className="transition-all duration-300 ease-out origin-top"
+            style={{ 
+              transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
+            }}
+          >
+            <div className="glass-panel p-8 rounded-xl border-2 border-border">
+              <h2 className="text-3xl md:text-4xl font-bold font-display text-gradient mb-6">
+                Let's Connect
+              </h2>
+              <ContactForm />
+            </div>
+          </section>
         </div>
       </div>
     </div>
