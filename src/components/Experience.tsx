@@ -1,5 +1,6 @@
 import { Card } from "@/components/ui/card";
-import { Briefcase } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 
 const experiences = [
   {
@@ -47,40 +48,74 @@ const experiences = [
 ];
 
 export const Experience = () => {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  const toggleExpand = (index: number) => {
+    setExpandedIndex(expandedIndex === index ? null : index);
+  };
+
   return (
-    <div className="relative">
-      {/* Timeline line */}
-      <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-tertiary hidden md:block" />
+    <div className="relative max-w-5xl mx-auto">
+      {/* Center timeline line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-secondary to-tertiary transform -translate-x-1/2 hidden md:block" />
       
-      <div className="space-y-8">
-        {experiences.map((exp, index) => (
-          <Card
-            key={index}
-            className="glass-panel p-6 md:p-8 group hover:border-primary/50 transition-all duration-300 animate-slide-up relative md:ml-20"
-            style={{ animationDelay: `${index * 100}ms` }}
-          >
-            {/* Timeline dot */}
-            <div className={`absolute -left-[3.75rem] top-8 w-6 h-6 rounded-full bg-${exp.color} border-4 border-background hidden md:block group-hover:scale-125 transition-transform`} />
-            
-            <div className="space-y-4">
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2">
-                <div>
-                  <h3 className="text-2xl font-semibold font-display group-hover:text-primary transition-colors">
-                    {exp.title}
-                  </h3>
-                  <p className="text-lg text-muted-foreground">{exp.company}</p>
-                </div>
-                <span className={`text-sm font-mono px-3 py-1 rounded-full bg-${exp.color}/10 text-${exp.color} self-start`}>
-                  {exp.period}
-                </span>
-              </div>
+      <div className="space-y-12">
+        {experiences.map((exp, index) => {
+          const isExpanded = expandedIndex === index;
+          const isLeft = index % 2 === 0;
+          
+          return (
+            <div
+              key={index}
+              className={`relative flex ${isLeft ? 'md:justify-end' : 'md:justify-start'} animate-slide-up`}
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              {/* Timeline dot */}
+              <div className={`absolute left-1/2 top-8 w-4 h-4 rounded-full bg-${exp.color} border-4 border-background transform -translate-x-1/2 hidden md:block z-10 transition-all duration-300 ${isExpanded ? 'scale-150 shadow-[0_0_20px_currentColor]' : 'group-hover:scale-125'}`} />
               
-              <p className="text-muted-foreground leading-relaxed">
-                {exp.description}
-              </p>
+              {/* Card */}
+              <Card
+                onClick={() => toggleExpand(index)}
+                className={`glass-panel group hover:border-primary/50 transition-all duration-300 cursor-pointer relative w-full md:w-[45%] ${
+                  isExpanded ? 'border-primary/60' : ''
+                }`}
+              >
+                <div className="p-6">
+                  {/* Compact view */}
+                  <div className="space-y-2">
+                    <h3 className="text-xl md:text-2xl font-semibold font-display group-hover:text-primary transition-colors">
+                      {exp.title}
+                    </h3>
+                    <p className="text-lg text-muted-foreground">{exp.company}</p>
+                    <div className="flex items-center justify-between">
+                      <span className={`text-sm font-mono px-3 py-1 rounded-full bg-${exp.color}/10 text-${exp.color}`}>
+                        {exp.period}
+                      </span>
+                      <ChevronDown 
+                        className={`w-5 h-5 text-primary transition-transform duration-300 ${
+                          isExpanded ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </div>
+                  </div>
+                  
+                  {/* Expanded description */}
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      isExpanded ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <div className="pt-4 border-t border-border">
+                      <p className="text-muted-foreground leading-relaxed">
+                        {exp.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Card>
             </div>
-          </Card>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

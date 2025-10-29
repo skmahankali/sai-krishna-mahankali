@@ -52,8 +52,8 @@ export const Hero = () => {
           </div>
         </div>
 
-        <h1 className="text-6xl md:text-8xl font-bold font-display tracking-tight">
-          <span className="text-gradient">Sai Mahankali</span>
+        <h1 className="text-5xl md:text-7xl font-bold font-display tracking-tight">
+          <span className="text-gradient">Sai Krishna Mahankali</span>
         </h1>
 
         {/* Social Links */}
@@ -71,7 +71,7 @@ export const Hero = () => {
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p>GitHub</p>
+                <p>View My Personal Projects</p>
               </TooltipContent>
             </Tooltip>
             
@@ -87,7 +87,7 @@ export const Hero = () => {
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p>LinkedIn</p>
+                <p>CHeckout my linkedIn</p>
               </TooltipContent>
             </Tooltip>
             
@@ -111,7 +111,7 @@ export const Hero = () => {
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Gmail</p>
+                <p>Send Me an Email</p>
               </TooltipContent>
             </Tooltip>
             
@@ -127,7 +127,7 @@ export const Hero = () => {
                 </a>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Gaming</p>
+                <p>Explore My Gaming World</p>
               </TooltipContent>
             </Tooltip>
           </div>
