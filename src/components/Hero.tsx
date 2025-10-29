@@ -45,17 +45,15 @@ export const Hero = () => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary to-secondary opacity-40 blur-xl group-hover:opacity-60 transition-opacity duration-300" />
             <img
               src={profilePhoto}
-              alt="Sai Krishna Mahankali"
-              className="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-primary/40 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-transform duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-110 md:hover:scale-115"
+              alt="Sai Mahankali"
+              className="relative w-32 h-32 md:w-36 md:h-36 rounded-full object-cover border-2 border-primary/40 shadow-[0_0_20px_rgba(14,165,233,0.3)] transition-transform duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-150 md:hover:scale-[1.6]"
               style={{ transitionDuration: '250ms' }}
             />
           </div>
         </div>
 
         <h1 className="text-6xl md:text-8xl font-bold font-display tracking-tight">
-          <span className="text-gradient">Sai Krishna</span>
-          <br />
-          <span className="dark:text-foreground text-foreground">Mahankali</span>
+          <span className="text-gradient">Sai Mahankali</span>
         </h1>
 
         {/* Social Links */}
