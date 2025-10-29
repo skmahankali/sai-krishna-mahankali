@@ -8,15 +8,11 @@ import { Certifications } from "@/components/Certifications";
 import { ContactForm } from "@/components/ContactForm";
 import { ParticleBackground } from "@/components/ParticleBackground";
 import { ScrollHeader } from "@/components/ScrollHeader";
-import { CollapsedSectionStack } from "@/components/CollapsedSectionStack";
 
 const Index = () => {
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
-  const [collapsedSections, setCollapsedSections] = useState<string[]>([]);
-  const [showStack, setShowStack] = useState(false);
   const lastScrollY = useRef(0);
-  const observerRef = useRef<IntersectionObserver | null>(null);
 
   const sections = [
     { id: "about", title: "About Me" },
@@ -26,55 +22,6 @@ const Index = () => {
     { id: "certifications", title: "Professional Credentials" },
     { id: "contact", title: "Let's Connect" },
   ];
-
-  const scrollToSection = (id: string) => {
-    const element = sectionRefs.current[id];
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    // IntersectionObserver to track which sections are above viewport
-    observerRef.current = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const sectionId = entry.target.id;
-          const rect = entry.target.getBoundingClientRect();
-          
-          // Section is above viewport (scrolled past)
-          if (rect.bottom < 100 && scrollDirection === 'up') {
-            setCollapsedSections((prev) => {
-              if (!prev.includes(sectionId)) {
-                return [...prev, sectionId];
-              }
-              return prev;
-            });
-          } else if (rect.top < window.innerHeight && scrollDirection === 'down') {
-            // Section is coming back into view
-            setCollapsedSections((prev) => prev.filter((id) => id !== sectionId));
-          }
-        });
-      },
-      { threshold: [0, 0.1, 0.5, 1], rootMargin: '-100px 0px 0px 0px' }
-    );
-
-    // Observe all sections
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref && observerRef.current) {
-        observerRef.current.observe(ref);
-      }
-    });
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [scrollDirection]);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -87,16 +34,33 @@ const Index = () => {
       if (direction !== scrollDirection && currentScrollY > 100) {
         setScrollDirection(direction);
       }
-
-      // Show stack only when scrolling up and past hero
-      if (direction === 'up' && currentScrollY > 300) {
-        setShowStack(true);
-      } else if (direction === 'down') {
-        setShowStack(false);
-        setCollapsedSections([]); // Clear collapsed sections when scrolling down
-      }
       
       lastScrollY.current = currentScrollY;
+
+      // Apply compression/expansion effect to sections
+      Object.entries(sectionRefs.current).forEach(([id, ref]) => {
+        if (!ref) return;
+        
+        const rect = ref.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isInView) {
+          const scrollProgress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / window.innerHeight));
+          
+          if (direction === 'up') {
+            // Compress: reduce scale and padding
+            const scale = 0.96 + (scrollProgress * 0.04); // 0.96 to 1.0
+            ref.style.transform = `scaleY(${scale})`;
+            ref.style.paddingTop = `${scrollProgress * 24}px`;
+            ref.style.paddingBottom = `${scrollProgress * 24}px`;
+          } else {
+            // Expand: full scale and padding
+            ref.style.transform = 'scaleY(1)';
+            ref.style.paddingTop = '24px';
+            ref.style.paddingBottom = '24px';
+          }
+        }
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -107,12 +71,6 @@ const Index = () => {
     <div className="relative min-h-screen overflow-hidden">
       <ParticleBackground />
       <ScrollHeader />
-      <CollapsedSectionStack
-        sections={sections}
-        collapsedSections={collapsedSections}
-        isVisible={showStack}
-        onSectionClick={scrollToSection}
-      />
       
       <div className="relative z-10">
         <Hero />
@@ -122,9 +80,10 @@ const Index = () => {
           <section 
             ref={(el) => (sectionRefs.current["about"] = el)} 
             id="about"
-            className="transition-all duration-280 ease-out"
+            className="transition-all duration-300 ease-out origin-top"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
             }}
           >
             <div className="glass-panel p-8 rounded-xl border-2 border-border">
@@ -139,9 +98,10 @@ const Index = () => {
           <section 
             ref={(el) => (sectionRefs.current["experience"] = el)} 
             id="experience"
-            className="transition-all duration-280 ease-out"
+            className="transition-all duration-300 ease-out origin-top"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
             }}
           >
             <div className="glass-panel p-8 rounded-xl border-2 border-border">
@@ -156,9 +116,10 @@ const Index = () => {
           <section 
             ref={(el) => (sectionRefs.current["skills"] = el)} 
             id="skills"
-            className="transition-all duration-280 ease-out"
+            className="transition-all duration-300 ease-out origin-top"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
             }}
           >
             <div className="glass-panel p-8 rounded-xl border-2 border-border">
@@ -173,9 +134,10 @@ const Index = () => {
           <section 
             ref={(el) => (sectionRefs.current["projects"] = el)} 
             id="projects"
-            className="transition-all duration-280 ease-out"
+            className="transition-all duration-300 ease-out origin-top"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
             }}
           >
             <div className="glass-panel p-8 rounded-xl border-2 border-border">
@@ -190,9 +152,10 @@ const Index = () => {
           <section 
             ref={(el) => (sectionRefs.current["certifications"] = el)} 
             id="certifications"
-            className="transition-all duration-280 ease-out"
+            className="transition-all duration-300 ease-out origin-top"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
             }}
           >
             <div className="glass-panel p-8 rounded-xl border-2 border-border">
@@ -207,9 +170,10 @@ const Index = () => {
           <section 
             ref={(el) => (sectionRefs.current["contact"] = el)} 
             id="contact"
-            className="transition-all duration-280 ease-out"
+            className="transition-all duration-300 ease-out origin-top"
             style={{ 
               transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)',
+              willChange: 'transform, padding'
             }}
           >
             <div className="glass-panel p-8 rounded-xl border-2 border-border">
