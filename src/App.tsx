@@ -10,6 +10,9 @@ import Contact from './components/Contact'
 import DevGame from './components/DevGame'
 import EasterEgg from './components/EasterEgg'
 import ParticleWeb from './components/ParticleWeb'
+import { SectionCollapseProvider } from './context/SectionCollapseContext'
+import CollapsedBarsOverlay from './components/CollapsedBarsOverlay'
+import CollapsibleSection from './components/CollapsibleSection'
 
 function App() {
   // Default to system preference
@@ -44,6 +47,7 @@ function App() {
   }
 
   return (
+    <SectionCollapseProvider>
     <ThemeContext.Provider value={theme}>
       <div
         className="min-h-screen grid-bg noise"
@@ -56,13 +60,14 @@ function App() {
       >
         <ParticleWeb />
         <Navbar />
+        <CollapsedBarsOverlay />
         <main style={{ position: 'relative', zIndex: 1 }}>
-          <Hero />
-          <About />
-          <Skills />
-          <Experience />
-          <Projects />
-          <Contact />
+          <CollapsibleSection sectionId="hero"><Hero /></CollapsibleSection>
+          <CollapsibleSection sectionId="about"><About /></CollapsibleSection>
+          <CollapsibleSection sectionId="skills"><Skills /></CollapsibleSection>
+          <CollapsibleSection sectionId="experience"><Experience /></CollapsibleSection>
+          <CollapsibleSection sectionId="projects"><Projects /></CollapsibleSection>
+          <CollapsibleSection sectionId="contact"><Contact /></CollapsibleSection>
         </main>
 
         <footer
@@ -85,6 +90,7 @@ function App() {
         <EasterEgg />
       </div>
     </ThemeContext.Provider>
+    </SectionCollapseProvider>
   )
 }
 
