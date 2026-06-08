@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useState } from 'react'
 import { useCollapseContext } from '../context/SectionCollapseContext'
 import { useTheme } from '../context/ThemeContext'
 
@@ -88,6 +89,15 @@ function BarIcon({ id, color }: { id: string; color: string }) {
 export default function CollapsedBarsOverlay() {
   const { collapsed, barIndex } = useCollapseContext()
   const theme = useTheme()
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handler, { passive: true })
+    return () => window.removeEventListener('resize', handler)
+  }, [])
+
+  if (isMobile) return null
 
   const handleClick = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
