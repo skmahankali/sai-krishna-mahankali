@@ -18,7 +18,7 @@ const MESSAGES = [
 export default function EasterEgg() {
   const [active, setActive] = useState(false)
   const [message, setMessage] = useState('')
-  const [crtMode, setCrtMode] = useState(false)
+  const [, setCrtMode] = useState(false)
   const sequenceRef = useRef<string[]>([])
 
   useEffect(() => {

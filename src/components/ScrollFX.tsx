@@ -7,7 +7,7 @@ export default function ScrollFX({ soundEnabled = true }: { soundEnabled?: boole
   const lastTime = useRef(Date.now())
   const audioCtxRef = useRef<AudioContext | null>(null)
   const soundCooldownRef = useRef(false)
-  const animIdRef = useRef<number>()
+  const animIdRef = useRef<number | undefined>(undefined)
 
   useEffect(() => {
     const canvas = canvasRef.current
