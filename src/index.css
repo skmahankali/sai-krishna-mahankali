@@ -269,3 +269,20 @@ body {
 @media (max-width: 768px) {
   .hero-terminal { display: none; }
 }
+
+/* ── Section collapse bar icon animations ── */
+@keyframes bar-spin      { to { transform: rotate(360deg); } }
+@keyframes bar-pulse     { 0%,100% { transform: scale(1); opacity:.8 } 50% { transform: scale(1.1); opacity:1 } }
+@keyframes bar-lid       { 0%,40%,100% { transform: scaleY(1) } 18%,28% { transform: scaleY(0.45) translateY(2px) } }
+@keyframes bar-dot-pop   { 0%,80%,100% { opacity:.25 } 30% { opacity:1 } }
+@keyframes bar-flap      { 0%,60%,100% { transform: rotateX(0deg) } 22%,44% { transform: rotateX(-38deg) } }
+@keyframes bar-cursor    { 0%,100% { opacity:1 } 50% { opacity:0 } }
+
+.bar-icon-spin   { animation: bar-spin    6s  linear      infinite; transform-origin: center; }
+.bar-icon-pulse  { animation: bar-pulse   2.4s ease-in-out infinite; }
+.bar-icon-lid    { animation: bar-lid     3s  ease-in-out infinite; transform-origin: 50% 100%; }
+.bar-icon-dot1   { animation: bar-dot-pop 2s  ease-in-out infinite; }
+.bar-icon-dot2   { animation: bar-dot-pop 2s  ease-in-out infinite .2s; }
+.bar-icon-dot3   { animation: bar-dot-pop 2s  ease-in-out infinite .4s; }
+.bar-icon-flap   { animation: bar-flap    2.8s ease-in-out infinite; }
+.bar-icon-cursor { animation: bar-cursor  1s  step-end    infinite; }
