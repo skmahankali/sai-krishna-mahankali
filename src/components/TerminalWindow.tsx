@@ -149,7 +149,7 @@ export default function TerminalWindow() {
             {scene.command.slice(0, charIdx)}
           </span>
           {showCursor && (
-            <span className="blink" style={{ display: 'inline-block', width: 7, height: 13, background: '#22d3ee', marginLeft: 2, opacity: 0.85 }} />
+            <span className="blink" style={{ display: 'inline-block', width: 7, height: 13, background: '#22d3ee', marginLeft: 2 }} />
           )}
         </div>
 
@@ -174,7 +174,7 @@ export default function TerminalWindow() {
             style={{ display: 'flex', alignItems: 'baseline', gap: 0, marginTop: 4 }}
           >
             <span style={{ color: '#4ade80', marginRight: 6 }}>➜</span>
-            <span className="blink" style={{ display: 'inline-block', width: 7, height: 13, background: '#22d3ee', opacity: 0.85 }} />
+            <span className="blink" style={{ display: 'inline-block', width: 7, height: 13, background: '#22d3ee' }} />
           </motion.div>
         )}
       </div>
