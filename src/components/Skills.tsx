@@ -86,8 +86,7 @@ const CERTS = [
     icon: '☁️',
     color: '#f97316',
     href: 'https://www.credly.com/badges/3bf8c52c-d06c-4af5-bd3c-10a58eddcc80',
-    issued: '2022-03-01',   // TODO: replace with your actual issued date
-    expires: '2025-03-01',  // TODO: replace with your actual expiry date
+    expires: '2026-08-16',
   },
   {
     label: 'Terraform Associate',
@@ -95,8 +94,7 @@ const CERTS = [
     icon: '🏗️',
     color: '#7c3aed',
     href: 'https://www.credly.com/badges/4a6c520e-7270-4d2d-bc73-5779555213f5',
-    issued: '2023-08-01',   // TODO: replace with your actual issued date
-    expires: '2025-08-01',  // TODO: replace with your actual expiry date
+    expires: '2025-11-12',
   },
 ]
 
@@ -197,8 +195,7 @@ export default function Skills() {
             Certifications
           </p>
 
-          {/* Cert cards */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginBottom: 32 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14 }}>
             {CERTS.map(cert => {
               const active = new Date(cert.expires) > new Date()
               return (
@@ -218,10 +215,9 @@ export default function Skills() {
                     gap: 14,
                     transition: 'all 0.2s',
                     boxShadow: theme.shadow,
-                    opacity: active ? 1 : 0.7,
                   }}
                   onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.borderColor = active ? cert.color : '#ef4444'
+                    (e.currentTarget as HTMLElement).style.borderColor = cert.color
                     ;(e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'
                   }}
                   onMouseLeave={e => {
@@ -231,10 +227,9 @@ export default function Skills() {
                 >
                   <div style={{
                     width: 44, height: 44, borderRadius: 10, flexShrink: 0,
-                    background: active ? `${cert.color}18` : 'rgba(239,68,68,0.08)',
+                    background: `${cert.color}18`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontSize: '1.5rem',
-                    filter: active ? 'none' : 'grayscale(60%)',
                   }}>
                     {cert.icon}
                   </div>
@@ -243,90 +238,19 @@ export default function Skills() {
                       <p style={{ fontFamily: "'Plus Jakarta Sans',sans-serif", fontWeight: 700, fontSize: '0.88rem', color: theme.text }}>{cert.label}</p>
                       <span style={{
                         fontFamily: "'JetBrains Mono',monospace",
-                        fontSize: '0.62rem', fontWeight: 600,
+                        fontSize: '0.6rem', fontWeight: 600,
                         padding: '2px 7px', borderRadius: 100,
-                        background: active ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)',
+                        background: active ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.1)',
                         color: active ? '#22c55e' : '#ef4444',
-                        border: `1px solid ${active ? 'rgba(34,197,94,0.25)' : 'rgba(239,68,68,0.25)'}`,
-                        letterSpacing: '0.04em',
+                        border: `1px solid ${active ? 'rgba(34,197,94,0.25)' : 'rgba(239,68,68,0.2)'}`,
                       }}>
                         {active ? '● Active' : '○ Expired'}
                       </span>
                     </div>
                     <p style={{ fontFamily: "'Inter',sans-serif", fontSize: '0.76rem', color: theme.textMuted }}>{cert.issuer}</p>
-                    <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.68rem', color: active ? cert.color : theme.textMuted, marginTop: 2 }}>
-                      {active ? 'View on Credly ↗' : `Expired ${cert.expires}`}
-                    </p>
+                    <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.68rem', color: cert.color, marginTop: 2 }}>View on Credly ↗</p>
                   </div>
                 </motion.a>
-              )
-            })}
-          </div>
-
-          {/* Timeline */}
-          <div style={{ ...card, padding: '20px 24px', boxShadow: theme.shadow }}>
-            <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.7rem', color: theme.textMuted, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 18 }}>
-              Validity Timeline
-            </p>
-            {CERTS.map((cert, ci) => {
-              const issuedMs = new Date(cert.issued).getTime()
-              const expiresMs = new Date(cert.expires).getTime()
-              const nowMs = Date.now()
-              const active = expiresMs > nowMs
-
-              // range spans from earliest issued to latest expires across all certs
-              const allStart = Math.min(...CERTS.map(c => new Date(c.issued).getTime()))
-              const allEnd = Math.max(...CERTS.map(c => new Date(c.expires).getTime()), nowMs + 1000 * 60 * 60 * 24 * 180)
-              const span = allEnd - allStart
-
-              const barLeft = ((issuedMs - allStart) / span) * 100
-              const barWidth = ((expiresMs - issuedMs) / span) * 100
-              const todayLeft = ((nowMs - allStart) / span) * 100
-
-              return (
-                <div key={cert.label} style={{ marginBottom: ci < CERTS.length - 1 ? 20 : 0 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                    <span style={{ fontFamily: "'Inter',sans-serif", fontSize: '0.8rem', color: theme.text, fontWeight: 500 }}>
-                      {cert.label}
-                    </span>
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.68rem', color: theme.textMuted }}>
-                      {cert.issued} → {cert.expires}
-                    </span>
-                  </div>
-                  <div style={{ position: 'relative', height: 10, background: 'rgba(148,163,184,0.08)', borderRadius: 6, overflow: 'visible' }}>
-                    {/* Cert bar */}
-                    <div style={{
-                      position: 'absolute',
-                      left: `${barLeft}%`,
-                      width: `${barWidth}%`,
-                      height: '100%',
-                      borderRadius: 6,
-                      background: active
-                        ? `linear-gradient(90deg, ${cert.color}99, ${cert.color})`
-                        : 'rgba(148,163,184,0.3)',
-                    }} />
-                    {/* Today marker */}
-                    {todayLeft >= 0 && todayLeft <= 100 && (
-                      <div style={{
-                        position: 'absolute',
-                        left: `${todayLeft}%`,
-                        top: -4, bottom: -4,
-                        width: 2,
-                        background: '#22c55e',
-                        borderRadius: 2,
-                        zIndex: 1,
-                      }}>
-                        <div style={{
-                          position: 'absolute', top: -18, left: '50%', transform: 'translateX(-50%)',
-                          fontFamily: "'JetBrains Mono',monospace", fontSize: '0.58rem', color: '#22c55e',
-                          whiteSpace: 'nowrap', fontWeight: 600,
-                        }}>
-                          today
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
               )
             })}
           </div>
