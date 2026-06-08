@@ -267,5 +267,5 @@ body {
 }
 
 @media (max-width: 768px) {
-  .hero-terminal { display: none !important; }
+  .hero-terminal { display: none; }
 }

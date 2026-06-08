@@ -106,6 +106,7 @@ export default function TerminalWindow() {
 
   return (
     <div style={{
+      width: '100%',
       background: 'rgba(15,23,42,0.95)',
       border: '1px solid rgba(255,255,255,0.08)',
       borderRadius: 12,

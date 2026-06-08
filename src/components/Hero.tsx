@@ -252,7 +252,7 @@ export default function Hero() {
           </div>
 
           {/* Terminal panel — hidden on mobile */}
-          <div style={{ display: 'flex', alignItems: 'center' }} className="hero-terminal">
+          <div style={{ display: 'flex', alignItems: 'center', width: '100%' }} className="hero-terminal">
             <TerminalWindow />
           </div>
 
