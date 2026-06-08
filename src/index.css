@@ -265,3 +265,7 @@ body {
     linear-gradient(90deg, var(--grid-color, rgba(148,163,184,0.04)) 1px, transparent 1px);
   background-size: 48px 48px;
 }
+
+@media (max-width: 768px) {
+  .hero-terminal { display: none !important; }
+}

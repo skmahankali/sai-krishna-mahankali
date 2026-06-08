@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { Github, Linkedin, Instagram, Mail } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
+import TerminalWindow from './TerminalWindow'
 
 const ROLES = [
   'Infrastructure Automation Engineer',
@@ -88,7 +89,13 @@ export default function Hero() {
       }} />
 
       <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%', position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: 780 }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'minmax(0,1fr) minmax(0,1fr)',
+          gap: 48,
+          alignItems: 'center',
+        }}>
+          <div>
           {/* Available badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -242,6 +249,13 @@ export default function Hero() {
               </a>
             ))}
           </motion.div>
+          </div>
+
+          {/* Terminal panel — hidden on mobile */}
+          <div style={{ display: 'flex', alignItems: 'center' }} className="hero-terminal">
+            <TerminalWindow />
+          </div>
+
         </div>
       </div>
 
