@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(/Users/smaha005/Library/Caches/ms-playwright-go/1.50.1/node --version)",
+      "Bash(NODE=/Users/smaha005/Library/Caches/ms-playwright-go/1.50.1/node)",
+      "Bash(NPM=\"/tmp/npm-extract/package/bin/npm-cli.js\")",
+      "Bash($NODE $NPM --version)",
+      "Bash($NODE $NPM install)",
+      "Bash(export PATH=\"/Users/smaha005/Library/Caches/ms-playwright-go/1.50.1:$PATH\")",
+      "Bash($NODE $NPM run build)",
+      "Bash($NODE $NPM install @vitejs/plugin-react)"
+    ]
+  }
+}

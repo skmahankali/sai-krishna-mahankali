@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "portfolio-dev",
+      "runtimeExecutable": "/Users/smaha005/Library/Application Support/com.raycast.macos/NodeJS/runtime/22.22.2/bin/node",
+      "runtimeArgs": ["/Users/smaha005/sk/projects/portfolio-claude/node_modules/.bin/vite", "--port", "5173"],
+      "port": 5173
+    }
+  ]
+}

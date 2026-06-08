@@ -1,0 +1,163 @@
+<h2>What goes on the right side of the hero?</h2>
+<p class="subtitle">Three directions — each tells a different story about who you are as an engineer</p>
+
+<style>
+  .preview-card {
+    background: #0f172a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(99,102,241,0.2);
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+  .preview-header {
+    background: rgba(255,255,255,0.04);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #ffbd2e; }
+  .dot.green { background: #28ca40; }
+  .preview-title { color: rgba(255,255,255,0.4); font-size: 11px; margin-left: 6px; }
+  .preview-body { padding: 14px 16px; font-size: 11px; line-height: 1.7; }
+  .cmd { color: #22d3ee; }
+  .out { color: rgba(255,255,255,0.55); }
+  .ok { color: #22c55e; }
+  .dim { color: rgba(255,255,255,0.25); }
+
+  /* pipeline */
+  .pipe-row { display: flex; align-items: center; gap: 0; margin-top: 6px; }
+  .pipe-step {
+    flex: 1; text-align: center; padding: 6px 4px;
+    border-radius: 6px; font-size: 10px; font-family: 'Inter', sans-serif;
+  }
+  .pipe-arrow { color: rgba(255,255,255,0.2); font-size: 14px; flex-shrink: 0; }
+  .pipe-code   { background: rgba(99,102,241,0.25); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+  .pipe-build  { background: rgba(249,115,22,0.2);  color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+  .pipe-test   { background: rgba(234,179,8,0.2);   color: #facc15; border: 1px solid rgba(234,179,8,0.3); }
+  .pipe-deploy { background: rgba(34,197,94,0.2);   color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+  .pipe-mon    { background: rgba(6,182,212,0.2);   color: #22d3ee; border: 1px solid rgba(6,182,212,0.3); }
+
+  /* stats */
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .stat-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+  }
+  .stat-val { font-size: 20px; font-weight: 700; color: #22d3ee; font-family: 'Inter', sans-serif; }
+  .stat-lbl { font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.06em; font-family: 'Inter', sans-serif; margin-top: 2px; }
+  .uptime-bar { height: 4px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+  .uptime-fill { height: 100%; width: 99.9%; background: linear-gradient(90deg,#22c55e,#22d3ee); border-radius: 2px; }
+</style>
+
+<div class="cards">
+
+  <!-- Option A: Terminal -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="preview-card">
+        <div class="preview-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="preview-title">sai@prod-cluster ~ $</span>
+        </div>
+        <div class="preview-body">
+          <div><span class="cmd">$ kubectl get pods -n production</span></div>
+          <div class="out">NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; READY&nbsp;&nbsp; STATUS</div>
+          <div class="ok">api-gateway-7f9b8c&nbsp;&nbsp;&nbsp;&nbsp; 3/3&nbsp;&nbsp;&nbsp;&nbsp; Running</div>
+          <div class="ok">auth-service-2d4a1&nbsp;&nbsp;&nbsp;&nbsp; 2/2&nbsp;&nbsp;&nbsp;&nbsp; Running</div>
+          <div class="ok">data-pipeline-9c3b6&nbsp;&nbsp; 1/1&nbsp;&nbsp;&nbsp;&nbsp; Running</div>
+          <div style="margin-top:8px"><span class="cmd">$ terraform apply -auto-approve</span></div>
+          <div class="out">Plan: 3 to add, 1 to change...</div>
+          <div class="ok">Apply complete! Resources: 3 added.</div>
+          <div style="margin-top:2px"><span class="dim">█</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Live Terminal</h3>
+      <p>Auto-typing commands loop — kubectl, terraform, helm. Feels authentic and technical. Immediately signals SRE.</p>
+    </div>
+  </div>
+
+  <!-- Option B: CI/CD Pipeline -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="preview-card" style="min-height:140px">
+        <div class="preview-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="preview-title">CI/CD Pipeline — main branch</span>
+        </div>
+        <div class="preview-body">
+          <div style="color:rgba(255,255,255,0.4);font-size:10px;font-family:'Inter',sans-serif;margin-bottom:8px">Last run: 2 minutes ago · <span style="color:#22c55e">✓ Passed</span></div>
+          <div class="pipe-row">
+            <div class="pipe-step pipe-code">Code</div>
+            <div class="pipe-arrow">›</div>
+            <div class="pipe-step pipe-build">Build</div>
+            <div class="pipe-arrow">›</div>
+            <div class="pipe-step pipe-test">Test</div>
+            <div class="pipe-arrow">›</div>
+            <div class="pipe-step pipe-deploy">Deploy</div>
+            <div class="pipe-arrow">›</div>
+            <div class="pipe-step pipe-mon">Monitor</div>
+          </div>
+          <div style="margin-top:12px;font-family:'Inter',sans-serif;font-size:10px;color:rgba(255,255,255,0.35)">
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span>Build time</span><span style="color:#fb923c">1m 42s</span>
+            </div>
+            <div style="display:flex;justify-content:space-between">
+              <span>Deploy target</span><span style="color:#4ade80">prod-k8s-us-east</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>CI/CD Pipeline</h3>
+      <p>Animated flow showing your automation mindset. Steps pulse/glow as they "run". Clean and employer-readable.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Infra Stats -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="preview-card">
+        <div class="preview-header">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="preview-title">Infrastructure Overview</span>
+        </div>
+        <div class="preview-body">
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-val">99.9%</div>
+              <div class="stat-lbl">Uptime SLA</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">6+</div>
+              <div class="stat-lbl">Years XP</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">50+</div>
+              <div class="stat-lbl">Services Managed</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-val">K8s</div>
+              <div class="stat-lbl">Primary Platform</div>
+            </div>
+          </div>
+          <div class="uptime-bar"><div class="uptime-fill"></div></div>
+          <div style="font-family:'Inter',sans-serif;font-size:9px;color:rgba(255,255,255,0.3);margin-top:4px;text-align:right">System nominal · all green</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Infra Stats Panel</h3>
+      <p>Glassmorphism card with your key numbers — uptime, scale, tools. Scannable at a glance. Works great with the dark theme.</p>
+    </div>
+  </div>
+
+</div>
