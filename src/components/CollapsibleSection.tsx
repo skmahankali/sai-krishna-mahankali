@@ -1,4 +1,3 @@
-import { motion } from 'motion/react'
 import { useCollapseContext } from '../context/SectionCollapseContext'
 
 const BAR_HEIGHT = 52
@@ -14,21 +13,27 @@ export default function CollapsibleSection({ sectionId, children }: Props) {
 
   return (
     <div style={{ position: 'relative' }}>
-      <motion.div
-        animate={isCollapsed
-          ? { height: 0, opacity: 0 }
-          : { height: 'auto', opacity: 1 }
-        }
-        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-        style={{ overflow: 'hidden' }}
-      >
-        {children}
-      </motion.div>
+      {/* CSS Grid rows: most reliable height-collapse, no JS measurement */}
+      <div style={{
+        display: 'grid',
+        gridTemplateRows: isCollapsed ? '0fr' : '1fr',
+        transition: 'grid-template-rows 0.4s cubic-bezier(0.4,0,0.2,1)',
+      }}>
+        <div style={{
+          minHeight: 0,
+          overflow: 'hidden',
+          opacity: isCollapsed ? 0 : 1,
+          transition: 'opacity 0.3s ease',
+        }}>
+          {children}
+        </div>
+      </div>
 
-      {/* Spacer: keeps section in scroll flow when collapsed so scrollIntoView works */}
-      {isCollapsed && (
-        <div style={{ height: BAR_HEIGHT }} aria-hidden="true" />
-      )}
+      {/* Spacer grows/shrinks in sync */}
+      <div style={{
+        height: isCollapsed ? BAR_HEIGHT : 0,
+        transition: 'height 0.4s cubic-bezier(0.4,0,0.2,1)',
+      }} aria-hidden="true" />
     </div>
   )
 }

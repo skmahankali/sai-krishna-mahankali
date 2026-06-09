@@ -10,19 +10,14 @@ import Contact from './components/Contact'
 import DevGame from './components/DevGame'
 import EasterEgg from './components/EasterEgg'
 import ParticleWeb from './components/ParticleWeb'
-import { SectionCollapseProvider } from './context/SectionCollapseContext'
-import CollapsedBarsOverlay from './components/CollapsedBarsOverlay'
-import CollapsibleSection from './components/CollapsibleSection'
 
 function App() {
-  // Default to system preference
   const [dark, setDark] = useState(() => {
     const stored = localStorage.getItem('theme')
     if (stored) return stored === 'dark'
     return window.matchMedia('(prefers-color-scheme: dark)').matches
   })
 
-  // Sync system preference changes (when user hasn't manually toggled)
   useEffect(() => {
     const mq = window.matchMedia('(prefers-color-scheme: dark)')
     const handler = (e: MediaQueryListEvent) => {
@@ -47,7 +42,6 @@ function App() {
   }
 
   return (
-    <SectionCollapseProvider>
     <ThemeContext.Provider value={theme}>
       <div
         className="min-h-screen grid-bg noise"
@@ -60,14 +54,13 @@ function App() {
       >
         <ParticleWeb />
         <Navbar />
-        <CollapsedBarsOverlay />
         <main style={{ position: 'relative', zIndex: 1 }}>
-          <CollapsibleSection sectionId="hero"><Hero /></CollapsibleSection>
-          <CollapsibleSection sectionId="about"><About /></CollapsibleSection>
-          <CollapsibleSection sectionId="skills"><Skills /></CollapsibleSection>
-          <CollapsibleSection sectionId="experience"><Experience /></CollapsibleSection>
-          <CollapsibleSection sectionId="projects"><Projects /></CollapsibleSection>
-          <CollapsibleSection sectionId="contact"><Contact /></CollapsibleSection>
+          <Hero />
+          <About />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Contact />
         </main>
 
         <footer
@@ -90,7 +83,6 @@ function App() {
         <EasterEgg />
       </div>
     </ThemeContext.Provider>
-    </SectionCollapseProvider>
   )
 }
 

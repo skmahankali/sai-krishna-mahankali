@@ -43,7 +43,7 @@ export default function Navbar() {
           : 'transparent',
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
         borderBottom: scrolled ? `1px solid ${theme.border}` : '1px solid transparent',
-        transition: 'all 0.3s ease',
+        transition: 'background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease',
       }}
     >
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 1.5rem', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -66,7 +66,8 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex" style={{ alignItems: 'center', gap: 4 }}>
           {NAV_ITEMS.map(item => {
-            const isActive = active === item.href.slice(1)
+            const id = item.href.slice(1)
+            const isActive = active === id
             return (
               <a
                 key={item.href}
@@ -80,7 +81,7 @@ export default function Navbar() {
                   padding: '6px 14px',
                   borderRadius: 6,
                   background: isActive ? theme.accentSoft : 'transparent',
-                  transition: 'all 0.15s',
+                  transition: 'color 0.15s, background 0.15s',
                 }}
                 onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.color = theme.text }}
                 onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.color = theme.textSecondary }}
@@ -103,7 +104,7 @@ export default function Navbar() {
               cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: '1rem',
-              transition: 'all 0.2s',
+              transition: 'background 0.2s, border-color 0.2s',
               color: theme.textSecondary,
             }}
             onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = theme.accentSoft}

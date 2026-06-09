@@ -61,7 +61,7 @@ export function SectionCollapseProvider({ children }: { children: React.ReactNod
       })
 
       if (changed) {
-        lockUntilRef.current = Date.now() + 420
+        lockUntilRef.current = Date.now() + 600
         setCollapsed(new Set(next))
       }
     }
