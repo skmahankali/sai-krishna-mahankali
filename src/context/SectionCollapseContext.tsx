@@ -26,8 +26,9 @@ export function SectionCollapseProvider({ children }: { children: React.ReactNod
   const [collapsed, setCollapsed] = useState<Set<SectionId>>(new Set())
   const collapsedRef = useRef<Set<SectionId>>(collapsed)
   collapsedRef.current = collapsed
-  // Prevents scroll handler from re-collapsing a section right after bar-click expansion
   const lockUntilRef = useRef<number>(0)
+  // Records the scrollY at which each section collapsed — used to expand on scroll-up
+  const collapseScrollYRef = useRef<Partial<Record<SectionId, number>>>({})
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,10 +48,15 @@ export function SectionCollapseProvider({ children }: { children: React.ReactNod
 
         if (rect.bottom <= threshold + 8 && !current.has(id)) {
           next.add(id)
+          collapseScrollYRef.current[id] = window.scrollY
           changed = true
-        } else if (rect.top >= threshold - 8 && current.has(id)) {
-          next.delete(id)
-          changed = true
+        } else if (current.has(id)) {
+          const savedY = collapseScrollYRef.current[id]
+          if (savedY !== undefined && window.scrollY <= savedY - 8) {
+            next.delete(id)
+            delete collapseScrollYRef.current[id]
+            changed = true
+          }
         }
       })
 
