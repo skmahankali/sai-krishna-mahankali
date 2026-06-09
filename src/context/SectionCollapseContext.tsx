@@ -24,12 +24,15 @@ export function useCollapseContext() {
 
 export function SectionCollapseProvider({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState<Set<SectionId>>(new Set())
-  // Keep a ref so the scroll handler always reads latest state without re-subscribing
   const collapsedRef = useRef<Set<SectionId>>(collapsed)
   collapsedRef.current = collapsed
+  // Prevents scroll handler from re-collapsing a section right after bar-click expansion
+  const lockUntilRef = useRef<number>(0)
 
   useEffect(() => {
     const handleScroll = () => {
+      if (Date.now() < lockUntilRef.current) return
+
       const current = collapsedRef.current
       const next = new Set(current)
       let changed = false
@@ -55,14 +58,15 @@ export function SectionCollapseProvider({ children }: { children: React.ReactNod
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // run once on mount
+    handleScroll()
     return () => window.removeEventListener('scroll', handleScroll)
-  }, []) // runs once — collapsedRef keeps it current
+  }, [])
 
   const barIndex = (id: SectionId) =>
     SECTION_IDS.filter((sid, i) => i < SECTION_IDS.indexOf(id) && collapsed.has(sid)).length
 
   const expandSection = (id: SectionId) => {
+    lockUntilRef.current = Date.now() + 600
     setCollapsed(prev => {
       const next = new Set(prev)
       next.delete(id)
