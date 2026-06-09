@@ -60,7 +60,10 @@ export function SectionCollapseProvider({ children }: { children: React.ReactNod
         }
       })
 
-      if (changed) setCollapsed(new Set(next))
+      if (changed) {
+        lockUntilRef.current = Date.now() + 420
+        setCollapsed(new Set(next))
+      }
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
