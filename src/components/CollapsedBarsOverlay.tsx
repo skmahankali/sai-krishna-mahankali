@@ -87,7 +87,7 @@ function BarIcon({ id, color }: { id: string; color: string }) {
 }
 
 export default function CollapsedBarsOverlay() {
-  const { collapsed, barIndex } = useCollapseContext()
+  const { collapsed, barIndex, expandSection } = useCollapseContext()
   const theme = useTheme()
   const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
 
@@ -100,7 +100,10 @@ export default function CollapsedBarsOverlay() {
   if (isMobile) return null
 
   const handleClick = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    expandSection(id as never)
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 50)
   }
 
   return (

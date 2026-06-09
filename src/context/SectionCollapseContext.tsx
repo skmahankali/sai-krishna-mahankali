@@ -8,12 +8,14 @@ type SectionId = typeof SECTION_IDS[number]
 
 interface CollapseContextValue {
   collapsed: Set<SectionId>
-  barIndex: (id: SectionId) => number   // position in the fixed stack (0-based)
+  barIndex: (id: SectionId) => number
+  expandSection: (id: SectionId) => void
 }
 
 const CollapseContext = createContext<CollapseContextValue>({
   collapsed: new Set(),
   barIndex: () => 0,
+  expandSection: () => {},
 })
 
 export function useCollapseContext() {
@@ -60,8 +62,16 @@ export function SectionCollapseProvider({ children }: { children: React.ReactNod
   const barIndex = (id: SectionId) =>
     SECTION_IDS.filter((sid, i) => i < SECTION_IDS.indexOf(id) && collapsed.has(sid)).length
 
+  const expandSection = (id: SectionId) => {
+    setCollapsed(prev => {
+      const next = new Set(prev)
+      next.delete(id)
+      return next
+    })
+  }
+
   return (
-    <CollapseContext.Provider value={{ collapsed, barIndex }}>
+    <CollapseContext.Provider value={{ collapsed, barIndex, expandSection }}>
       {children}
     </CollapseContext.Provider>
   )
