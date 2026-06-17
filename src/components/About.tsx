@@ -71,7 +71,10 @@ export default function About() {
               I'm a DevOps Engineer with over six years of experience in IT, currently specializing in infrastructure automation at T. Rowe Price. I'm passionate about building systems that are self-healing, observable, and boring in the best possible way.
             </p>
             <p style={{ fontFamily: "'Inter',sans-serif", fontSize: '1.05rem', color: theme.textSecondary, lineHeight: 1.85, marginBottom: 24 }}>
-              My goal is to become a world-class SRE, the kind who doesn't just respond to outages but engineers systems that prevent them. Think AIOps, event-driven automation, and infrastructure that just works.
+              My goal is to become a world-class SRE who doesn't just respond to outages but engineers systems that prevent them. I'm focused on AIOps, event-driven automation, and exploring how LLM-driven tools can accelerate infrastructure design and reduce operational toil.
+            </p>
+            <p style={{ fontFamily: "'Inter',sans-serif", fontSize: '1.05rem', color: theme.textSecondary, lineHeight: 1.85, marginBottom: 24 }}>
+              I'm currently exploring the intersection of AI and infrastructure automation. I believe the next generation of SREs will leverage LLMs and AI tools not as a gimmick, but as a fundamental way to work smarter. I'm learning prompt engineering, LLM APIs, and how to integrate AI into DevOps workflows.
             </p>
             <p style={{ fontFamily: "'Inter',sans-serif", fontSize: '1.05rem', color: theme.textSecondary, lineHeight: 1.85, marginBottom: 36 }}>
               Outside of work: I fly drones for the perspective, shoot archery for the focus, and play games for the strategy. All three have made me a better engineer.

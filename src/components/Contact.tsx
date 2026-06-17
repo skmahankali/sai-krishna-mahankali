@@ -200,7 +200,7 @@ export default function Contact() {
               border: `1px solid ${theme.accent}20`,
             }}>
               <p style={{ fontFamily: "'Inter',sans-serif", fontSize: '0.82rem', color: theme.textSecondary, lineHeight: 1.7 }}>
-                💡 I'm currently exploring SRE and AIOps roles. If you're building something interesting in infrastructure or cloud, I'd love to hear about it.
+                💡 I'm currently exploring SRE, AIOps, and infrastructure automation roles. Open to working anywhere in the US. H1B visa sponsorship available.
               </p>
             </div>
           </motion.div>

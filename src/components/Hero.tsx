@@ -8,7 +8,7 @@ const ROLES = [
   'Infrastructure Automation Engineer',
   'Site Reliability Engineer',
   'AIOps Enthusiast',
-  'Cloud Native Builder',
+  'SRE & AIOps Engineer',
   'Kubernetes Wrangler',
 ]
 
@@ -170,7 +170,7 @@ export default function Hero() {
               marginBottom: 44,
             }}
           >
-            "Automating with purpose, engineering with curiosity."
+            Building self-healing infrastructure. Exploring how AI shapes the future of SRE.
             <br />
             6+ years building infrastructure at scale at{' '}
             <span style={{ color: theme.textSecondary, fontWeight: 500 }}>T. Rowe Price</span>.

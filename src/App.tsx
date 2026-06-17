@@ -3,6 +3,7 @@ import { ThemeContext, DARK_THEME, LIGHT_THEME } from './context/ThemeContext'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
+import CurrentFocus from './components/CurrentFocus'
 import Skills from './components/Skills'
 import Experience from './components/Experience'
 import Projects from './components/Projects'
@@ -57,6 +58,7 @@ function App() {
         <main style={{ position: 'relative', zIndex: 1 }}>
           <Hero />
           <About />
+          <CurrentFocus />
           <Skills />
           <Experience />
           <Projects />

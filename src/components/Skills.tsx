@@ -8,12 +8,21 @@ const CATEGORIES = [
     label: 'Infrastructure',
     icon: '⚙️',
     skills: [
-      { name: 'Kubernetes / EKS / AKS', level: 88 },
-      { name: 'Terraform',              level: 90 },
-      { name: 'Ansible (AWX / EDA)',    level: 85 },
+      { name: 'Kubernetes / EKS / AKS', level: 88, subtitle: 'Multi-environment clusters at scale' },
+      { name: 'Terraform',              level: 90, subtitle: 'IaC for 150+ resources, multi-account AWS/Azure' },
+      { name: 'Ansible (AWX / EDA)',    level: 85, subtitle: 'Event-driven automation for infrastructure' },
       { name: 'Docker / Podman',        level: 90 },
       { name: 'Helm',                   level: 80 },
       { name: 'HashiCorp Vault',        level: 75 },
+    ],
+  },
+  {
+    id: 'ai',
+    label: 'AI & Automation',
+    icon: '🤖',
+    skills: [
+      { name: 'Claude / LLMs',     level: 72, subtitle: 'Exploring LLM APIs for infrastructure analysis' },
+      { name: 'Python Automation', level: 88, subtitle: 'Building tools for infra optimization' },
     ],
   },
   {
@@ -98,7 +107,7 @@ const CERTS = [
   },
 ]
 
-function SkillBar({ name, level, started, accent }: { name: string; level: number; started: boolean; accent: string }) {
+function SkillBar({ name, level, started, accent, subtitle }: { name: string; level: number; started: boolean; accent: string; subtitle?: string }) {
   const [w, setW] = useState(0)
   useEffect(() => {
     if (!started) return
@@ -107,11 +116,16 @@ function SkillBar({ name, level, started, accent }: { name: string; level: numbe
   }, [started, level])
 
   return (
-    <div style={{ marginBottom: 14 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
+    <div style={{ marginBottom: subtitle ? 18 : 14 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: subtitle ? 3 : 6 }}>
         <span style={{ fontFamily: "'Inter',sans-serif", fontSize: '0.85rem', color: 'inherit' }}>{name}</span>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.72rem', opacity: 0.5 }}>{level}%</span>
       </div>
+      {subtitle && (
+        <p style={{ fontFamily: "'JetBrains Mono',monospace", fontSize: '0.67rem', color: accent, opacity: 0.75, marginBottom: 6 }}>
+          {subtitle}
+        </p>
+      )}
       <div className="skill-track" style={{ background: 'rgba(148,163,184,0.1)' }}>
         <div className="skill-fill" style={{ width: `${w}%`, background: `linear-gradient(90deg, ${accent}99, ${accent})` }} />
       </div>
@@ -132,7 +146,7 @@ export default function Skills() {
     <section id="skills" ref={ref} style={{ padding: '7rem 1.5rem', background: theme.bg }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }} style={{ marginBottom: 48 }}>
-          <p className="section-label" style={{ color: theme.accent, marginBottom: 12 }}>02 / Skills</p>
+          <p className="section-label" style={{ color: theme.accent, marginBottom: 12 }}>03 / Skills</p>
           <h2 className="section-title" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', color: theme.text }}>
             Technical Skills
           </h2>
@@ -183,7 +197,7 @@ export default function Skills() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0 32px' }}>
             {cat.skills.map((s, i) => (
               <motion.div key={s.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.04 }}>
-                <SkillBar name={s.name} level={s.level} started={inView} accent={theme.accent} />
+                <SkillBar name={s.name} level={s.level} started={inView} accent={theme.accent} subtitle={s.subtitle} />
               </motion.div>
             ))}
           </div>
