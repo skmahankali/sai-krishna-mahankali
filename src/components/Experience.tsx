@@ -67,7 +67,7 @@ const JOBS = [
   {
     company: 'ConnxAI (formerly SmartIMS)',
     role: 'Network Engineer / DevOps Associate',
-    period: 'Aug 2019 – Aug 2021',
+    period: 'Aug 2016 – Aug 2021',
     location: 'Hyderabad, India',
     active: false,
     description: 'Transitioned from network engineering into DevOps. Built automation tooling for AI-driven network optimization, managed Linux servers, and participated in IoT projects.',
